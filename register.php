@@ -14,19 +14,19 @@
 		
 		
 		if(empty($user_first_name)){
-			$emptymsg1 = 'Fill up this field';
+			$emptymsg1 = 'first name is empty';
 		}
 		if(empty($user_last_name)){
-			$emptymsg2 = 'Fill up this field';
+			$emptymsg2 = 'last name is empty';
 		}
 		if(empty($user_email)){
-			$emptymsg3 = 'Fill up this field';
+			$emptymsg3 = 'email is empty';
 		}
 		if(empty($user_password)){
-			$emptymsg4 = 'Fill up this field';
+			$emptymsg4 = 'password is empty';
 		}
 		if(empty($passwordagain)){
-			$emptymsg5 = 'Fill up this field';
+			$emptymsg5 = 'password is empty';
 		}		
 		
 		if(!empty($user_first_name) && !empty($user_last_name) && !empty($user_email) && !empty($user_password) && !empty($passwordagain)){
