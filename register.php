@@ -1,46 +1,47 @@
 <?php
 	session_start();
-	$conn = new mysqli('localhost', 'root', '', 'sms_db');
+	$conn = new mysqli('localhost', 'root', '', 'project_login');
 
 	if(isset($_POST['submit'])){
-		$user_first_name 		= $_POST['user_first_name'];
-		$user_last_name 		= $_POST['user_last_name'];
-		$user_email 			= $_POST['user_email'];
-		$user_password 		= $_POST['user_password'];
+		$users_first_name 		= $_POST['users_first_name'];
+		$users_last_name 		= $_POST['users_last_name'];
+		$users_email 			= $_POST['users_email'];
+		$users_password 		= $_POST['users_password'];
 		$passwordagain  = $_POST['passwordagain'];
 		$md5password 	= md5($users_password);
 		
 		$emptymsg1 = $emptymsg2 = $emptymsg3 = $emptymsg4 = $emptymsg5 = $pasmatchmsg = '';
 		
 		
-		if(empty($user_first_name)){
-			$emptymsg1 = 'first name is empty';
+		if(empty($users_first_name)){
+			$emptymsg1 = 'Fill up this field';
 		}
-		if(empty($user_last_name)){
-			$emptymsg2 = 'last name is empty';
+		if(empty($users_last_name)){
+			$emptymsg2 = 'Fill up this field';
 		}
-		if(empty($user_email)){
-			$emptymsg3 = 'email is empty';
+		if(empty($users_email)){
+			$emptymsg3 = 'Fill up this field';
 		}
-		if(empty($user_password)){
-			$emptymsg4 = 'password is empty';
+		if(empty($users_password)){
+			$emptymsg4 = 'Fill up this field';
 		}
 		if(empty($passwordagain)){
-			$emptymsg5 = 'password is empty';
+			$emptymsg5 = 'Fill up this field';
 		}		
 		
-		if(!empty($user_first_name) && !empty($user_last_name) && !empty($user_email) && !empty($user_password) && !empty($passwordagain)){
-			if($user_password !== $passwordagain){
+		if(!empty($users_first_name) && !empty($users_last_name) && !empty($users_email) && !empty($users_password) && !empty($passwordagain)){
+			if($users_password !== $passwordagain){
 				$pasmatchmsg = 'Password does not match!';
 			}else{
 				$pasmatchmsg='';
-				$sql = "INSERT INTO users(user_first_name, user_last_name, user_email, user_password) 
-						VALUES('$user_first_name', '$user_last_name', '$user_email', '$md5password')";
+				$sql = "INSERT INTO users(users_first_name, users_last_name, users_email, users_password) 
+						VALUES('$users_first_name', '$users_last_name', '$users_email', '$md5password')";
 			
 				if($conn->query($sql) == TRUE){
 					header('location:login.php');
-					$_SESSION['signupmsg']='Sign Up Complete. Please Log in now.';
-				}else{
+					$_SESSION['signupmsg']='Account create successfully. Please Log in now.';
+				}
+				else{
 					echo 'data not inserted';
 				}
 			}
@@ -55,11 +56,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>IJI Restaurant</title>
+	<title>IJI Restaurant</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
-        <link rel="icon" href="images/icon.png">
+	    <link rel="icon" href="images/icon.png">
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
 		<style>
@@ -108,6 +109,7 @@
 				font-weight:bold;
 			}
 		</style>
+
 	</head>
 	
 	<body>
@@ -122,7 +124,7 @@
     </div>
      <!-- /Navigation -->
 		<div class="container">
-			<div class="container" style="margin-top:20px;">
+			<div class="container" style="margin-top:20px">
 				<h3 class="text-center">Create your Account & become a member.</h3>
 			</div>
 			<div class="container" style="margin-top:15px">
@@ -134,27 +136,27 @@
 						<div class="container bg-light p-4">
 							<form action="" method="POST">
 							<div class="mt-2 pb-2">
-								<label for="firstname" class="font-bold">First Name :</label>
-								<input type="name" name="user_first_name" class="form-control" placeholder="Your First Name" value="">
+								<label for="firstname" class="font-bold">First Name:</label>
+								<input type="name" name="users_first_name" class="form-control" placeholder="Enter your First Name" value="<?php if(isset($_POST['submit'])){echo $users_first_name; } ?>">
 								<span class="text-danger"><?php if(isset($_POST['submit'])){ echo $emptymsg1; }?></span>
 							</div>
 							<div class="mt-2 pb-2">
-								<label for="users_last_name" class="font-bold">Last Name :</label>
-								<input type="name" name="user_last_name" class="form-control" placeholder="Your Last Name" value="">
+								<label for="users_last_name" class="font-bold">Last Name:</label>
+								<input type="name" name="users_last_name" class="form-control" placeholder="Enter your Last Name" value="<?php if(isset($_POST['submit'])){echo $users_last_name; } ?>">
 								<span class="text-danger"><?php if(isset($_POST['submit'])){ echo $emptymsg2; }?></span>
 							</div>
 							<div class="mt-2 pb-2">
-								<label for="email" class="font-bold">Email :</label>
-								<input type="email" name="user_email" class="form-control" placeholder="Enter your email" value="">
+								<label for="email" class="font-bold">Email:</label>
+								<input type="email" name="users_email" class="form-control" placeholder="Enter your email" value="<?php if(isset($_POST['submit'])){echo $pasmatchmsg; } ?>">
 								<span class="text-danger"><?php if(isset($_POST['submit'])){ echo $emptymsg3; }?></span>
 							</div>
 							<div class="mt-1 pb-2">
-								<label for="password" class="font-bold">Password :</label>
-								<input type="password" name="user_password" class="form-control" placeholder="Enter New password" >
+								<label for="password" class="font-bold">Password:</label>
+								<input type="password" name="users_password" class="form-control" placeholder="Enter New password" >
 								<span class="text-danger"><?php if(isset($_POST['submit'])){ echo $emptymsg4; }?></span>
 							</div>
 							<div class="mt-1 pb-2">
-								<label for="password" class="font-bold">Password Again :</label>
+								<label for="password" class="font-bold">Password Again:</label>
 								<input type="password" name="passwordagain" class="form-control" placeholder="Enter password Again" >
 								<span class="text-danger"><?php if(isset($_POST['submit'])){ echo $emptymsg5.''.$pasmatchmsg; }?></span>
 							</div>
